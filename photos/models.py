@@ -3,6 +3,7 @@ from django.db import models
 class Category(models.Model):
     id=models.AutoField(primary_key=True)
     name = models.CharField(max_length=25, blank=False)
+    name_pl = models.CharField(max_length=25, blank=False)
 
     def __str__(self):
         return self.name
@@ -10,6 +11,7 @@ class Category(models.Model):
 class Session(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=100, blank=False)
+    name_pl = models.CharField(max_length=100, blank=False)
     date_taken = models.DateField(blank=False)
 
     def __str__(self):
