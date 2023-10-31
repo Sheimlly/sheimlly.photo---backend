@@ -9,7 +9,7 @@ class CategorySerializer(serializers.ModelSerializer):
 class SessionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Session
-        fields = ['id', 'name', 'name_pl', 'datetaken']
+        fields = ['id', 'name', 'name_pl', 'date_taken']
 
 class PhotoSerializer(serializers.ModelSerializer):
     category_name = serializers.CharField(source='category.name', read_only=True)
