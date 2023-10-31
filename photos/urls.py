@@ -9,6 +9,6 @@ from .views import *
 urlpatterns = [
     re_path(r'^photos/$', PhotoList.as_view()),
     # re_path(r'^photos/re_path', photo_list_2),
-    path('categories/', category_list),
+    re_path(r'^categories/', CategoryList.as_view()),
     path('sessions/', session_list),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -9,14 +9,12 @@ from .serializers import *
 from rest_framework import generics
 # Create your views here.
 
-@csrf_exempt
-@api_view(['GET'])
-@permission_classes((IsAuthenticatedOrReadOnly,))
-def category_list(request):
-    if (request.method == 'GET'):
-        categories = Category.objects.all()
-        serializer = CategorySerializer(categories, many=True)
-        return Response(serializer.data)
+class CategoryList(generics.ListAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name']
+
 
 @csrf_exempt
 @api_view(['GET'])
@@ -27,8 +25,9 @@ def session_list(request):
         serializer = SessionSerializer(data, many=True)
         return Response(serializer.data)
 
+
 class PhotoList(generics.ListAPIView):
-    queryset = Photo.objects.all()
+    queryset = Photo.objects.all().order_by('date_uploaded')
     serializer_class = PhotoSerializer
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['category', 'session']
+    filterset_fields = ['category', 'session', 'main_page']
