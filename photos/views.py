@@ -27,7 +27,7 @@ def session_list(request):
 
 
 class PhotoList(generics.ListAPIView):
-    queryset = Photo.objects.all().order_by('date_uploaded')
+    queryset = Photo.objects.all().order_by('-date_uploaded')
     serializer_class = PhotoSerializer
     filter_backends = [DjangoFilterBackend]
     filterset_fields = ['category', 'session', 'main_page']
