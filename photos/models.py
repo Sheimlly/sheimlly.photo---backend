@@ -39,10 +39,10 @@ class Photo(models.Model):
     main_page = models.BooleanField(default=False, blank=False)
     
     def save(self, *args, **kwargs):
-        if self.session:
+        if self.session and not self.date_created:
             self.date_created = self.session.date_taken
 
-        if self.image:
+        if self.image and not self.name:
             self.name = str(self.image.file)
             
         super(Photo, self).save(*args, **kwargs)
