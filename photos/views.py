@@ -16,14 +16,9 @@ class CategoryList(generics.ListAPIView):
     filterset_fields = ['name']
 
 
-@csrf_exempt
-@api_view(['GET'])
-@permission_classes((IsAuthenticatedOrReadOnly,))
-def session_list(request):
-    if (request.method == 'GET'):
-        data = Session.objects.all()
-        serializer = SessionSerializer(data, many=True)
-        return Response(serializer.data)
+class SessionList(generics.ListAPIView):
+    queryset = Session.objects.all().order_by('-date_taken')
+    serializer_class = SessionSerializer
 
 
 class PhotoList(generics.ListAPIView):
