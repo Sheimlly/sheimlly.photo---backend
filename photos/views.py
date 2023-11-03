@@ -19,6 +19,8 @@ class CategoryList(generics.ListAPIView):
 class SessionList(generics.ListAPIView):
     queryset = Session.objects.all().order_by('-date_taken')
     serializer_class = SessionSerializer
+    filter_backends = [DjangoFilterBackend]
+    filterset_fields = ['name']
 
 
 class PhotoList(generics.ListAPIView):
