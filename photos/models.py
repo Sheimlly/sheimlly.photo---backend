@@ -21,7 +21,7 @@ class Session(models.Model):
     date_taken = models.DateField(blank=False)
 
     def __str__(self):
-        return self.name
+        return '{} - {}'.format(self.date_taken, self.name)
 
 def path_file_name(instance, filename):
         if instance.session:
