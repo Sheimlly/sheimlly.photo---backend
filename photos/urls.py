@@ -14,5 +14,5 @@ router.register(r'sessions', SessionViewSet, basename='sessions')
 router.register(r'', PhotoViewSet, basename='photos')
 
 urlpatterns = [
-    path('', include(router.urls)),
+    re_path(r'', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
