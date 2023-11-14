@@ -30,7 +30,21 @@ class PhotoViewSet(viewsets.ModelViewSet):
         return Response(status=status.HTTP_204_NO_CONTENT)
     
     def update(self, request, pk=None):
-        serializer = PhotoSerializer(Photo.objects.get(pk=pk), data=request.data, partial=True)
+        serializer = PhotoSerializer(Photo.objects.get(pk=pk), data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+    def partial_update(self, request, pk=None):
+        instance = Photo.objects.get(pk=pk)
+        
+        if (request.data['session'] == 'None'):
+            instance.session = None
+            instance.save()
+            del request.data['session']
+
+        serializer = PhotoSerializer(instance, data=request.data, partial=True)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
