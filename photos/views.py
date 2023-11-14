@@ -41,7 +41,7 @@ class PhotoViewSet(viewsets.ModelViewSet):
     def partial_update(self, request, pk=None):
         instance = Photo.objects.get(pk=pk)
 
-        if (request.data['session'] == 'None'):
+        if ('session' in request.data and request.data['session'] == 'None'):
             instance.session = None
             instance.save()
             del request.data['session']
