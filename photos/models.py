@@ -31,7 +31,7 @@ def path_file_name(instance, filename):
 class Photo(models.Model):
     id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=50, blank=True)
-    session = models.ForeignKey(Session, on_delete=models.PROTECT, blank=True, null=True)
+    session = models.ForeignKey(Session, on_delete=models.CASCADE, blank=True, null=True)
     image = models.ImageField(upload_to=path_file_name)
     category = models.ForeignKey(Category, on_delete=models.PROTECT)
     date_created = models.DateField(blank=True, null=True)
