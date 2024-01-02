@@ -5,4 +5,4 @@ djangorestframework-simplejwt==5.3
 python_dotenv<=1.0
 Pillow==10.1
 django-filter==23.3
-psycopg2-binary==2.9.9
+psycopg2-binary==2.9
