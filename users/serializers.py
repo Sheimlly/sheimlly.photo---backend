@@ -8,5 +8,5 @@ class UserInfoSerializer(serializers.ModelSerializer):
 
 class SocialMediaSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserInfo
+        model = SocialMedia
         fields = ['id', 'name', 'username', 'link']
