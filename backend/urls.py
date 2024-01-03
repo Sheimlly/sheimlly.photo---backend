@@ -26,6 +26,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     re_path(r'^photos/', include('photos.urls')),
     path('users/', include('users.urls')),
-    path('token/', jwt_views.TokenObtainPairView.as_view(), name ='token_obtain_pair'),
-    path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

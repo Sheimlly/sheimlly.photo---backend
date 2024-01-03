@@ -161,6 +161,9 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = ''
 MEDIA_URL = ''
 
+AUTH_PROFILE_MODULE = 'users.CustomUser'
+AUTH_USER_MODEL = 'users.CustomUser'
+
 SITE_NAME = os.getenv('SITE_NAME')
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = os.getenv('EMAIL_HOST')

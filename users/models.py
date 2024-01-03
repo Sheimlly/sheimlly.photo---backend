@@ -7,6 +7,13 @@ from django.core.mail import send_mail, EmailMessage
 
 from django.conf import settings 
 
+from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
+from django.utils import timezone
+from django.utils.translation import gettext_lazy as _
+
+
+from .managers import CustomUserManager
+
 # Create your models here.
 class UserInfo(models.Model):
     id = models.AutoField(primary_key=True)
@@ -19,24 +26,23 @@ class SocialMedia(models.Model):
     username = models.CharField(max_length=50, blank=False)
     link = models.CharField(max_length=100, blank=False)
 
-@receiver(reset_password_token_created)
-def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
-
-    # the below like concatinates your websites reset password url and the reset email token which will be required at a later stage
-    email_plaintext_message = "Open the link to reset your password" + " " + "{}{}".format(instance.request.build_absolute_uri("http://localhost:3000/login/reset-password/"), reset_password_token.key)
-    
-    """
-        this below line is the django default sending email function, 
-        takes up some parameter (title(email title), message(email body), from(email sender), to(recipient(s))
-    """
-    send_mail(
-        # title:
-        "Password Reset for {title}".format(title=settings.SITE_NAME),
-        # message:
-        email_plaintext_message,
-        # from:
-        settings.EMAIL_HOST_USER
-        # to:
-        [reset_password_token.user.email],
-        fail_silently=False,
+class CustomUser(AbstractBaseUser):
+    email = models.EmailField(
+        max_length=255,
+        unique=True,
     )
+    is_active = models.BooleanField(default=True)
+    is_admin = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+    objects = CustomUserManager()
+
+    USERNAME_FIELD = 'email'
+
+    def __str__(self):
+        return self.email
+
+    @property
+    def is_staff(self):
+        "Is the user a member of staff?"
+        # Simplest possible answer: All admins are staff
+        return self.is_admin
