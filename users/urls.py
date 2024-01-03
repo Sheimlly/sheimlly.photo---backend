@@ -15,11 +15,11 @@ router.register(r'socialmedia', SocialMediaViewSet, basename='socialmedia')
 app_name = 'users'
 
 urlpatterns = [
-    path('login/', LoginView.as_view(), name='login'),
     path('register/', RegistrationView.as_view(), name='register'),
     path('change-password/', ChangePasswordView.as_view(), name='change-password'),
     
     path('token/', jwt_views.TokenObtainPairView.as_view(), name ='token_obtain_pair'),
     path('token/refresh/', jwt_views.TokenRefreshView.as_view(), name ='token_refresh'),
+    path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset')),
     re_path(r'', include(router.urls)),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
