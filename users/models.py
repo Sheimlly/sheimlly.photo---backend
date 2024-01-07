@@ -20,11 +20,23 @@ class UserInfo(models.Model):
     email = models.CharField(max_length=50, blank=False)
     phone_number = models.IntegerField(blank=True)
 
+def path_file_name(instance, filename):
+    print(instance.name)
+    ext = filename.split('.')[-1]
+    return '/'.join(['media', 'Socials', '{}.{}'.format(instance.name, ext)])
+
 class SocialMedia(models.Model):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=50, blank=False)
+    name = models.CharField(max_length=50, blank=False, unique=True)
+    icon = models.ImageField(upload_to=path_file_name)
     username = models.CharField(max_length=50, blank=False)
     link = models.CharField(max_length=100, blank=False)
+
+    def save(self, *args, **kwargs):
+        super(SocialMedia, self).save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
 
 class CustomUser(AbstractBaseUser):
     email = models.EmailField(

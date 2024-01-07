@@ -10,7 +10,7 @@ class UserInfoSerializer(serializers.ModelSerializer):
 class SocialMediaSerializer(serializers.ModelSerializer):
     class Meta:
         model = SocialMedia
-        fields = ['id', 'name', 'username', 'link']
+        fields = ['id', 'name', 'icon', 'username', 'link']
 
 
 class RegistrationSerializer(serializers.ModelSerializer):
