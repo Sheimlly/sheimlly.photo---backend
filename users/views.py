@@ -1,11 +1,11 @@
 from .models import *
 from .serializers import *
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, filters
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
-from django.contrib.auth import authenticate, login, logout
-from .utils import get_tokens_for_user
+from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework_simplejwt.views import TokenObtainPairView
 
 # Create your views here.
 
@@ -34,6 +34,16 @@ class SocialMediaViewSet(viewsets.ModelViewSet):
     queryset = SocialMedia.objects.all()
     serializer_class = SocialMediaSerializer
 
+class CustomUserViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAdminUser, ]
+    queryset = CustomUser.objects.all()
+    serializer_class = CustomUserSerializer
+    filter_backends = [DjangoFilterBackend, filters.SearchFilter]
+    filterset_fields = ['is_admin', 'is_active']
+    search_fields = ['email']
+
+class MyTokenObtainPairView(TokenObtainPairView):
+    serializer_class = MyTokenObtainPairSerializer
 
 class RegistrationView(APIView):
     permission_classes = [IsAdminUser, ]

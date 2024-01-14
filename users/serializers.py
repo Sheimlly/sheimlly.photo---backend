@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from .models import *
-
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 
 class UserInfoSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,7 +12,20 @@ class SocialMediaSerializer(serializers.ModelSerializer):
         model = SocialMedia
         fields = ['id', 'name', 'icon', 'username', 'link']
 
+class CustomUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ['id', 'email', 'is_admin', 'is_active']
 
+
+class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
+    def validate(self, attrs):
+        attrs = super().validate(attrs)
+        return {
+            "is_admin": self.user.is_admin,
+            **attrs,
+        }
+    
 class RegistrationSerializer(serializers.ModelSerializer):
     password2 = serializers.CharField(style={"input_type": "password"}, write_only=True)
 
