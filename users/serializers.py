@@ -23,6 +23,7 @@ class MyTokenObtainPairSerializer(TokenObtainPairSerializer):
         attrs = super().validate(attrs)
         return {
             "is_admin": self.user.is_admin,
+            "is_superuser": self.user.is_superuser,
             **attrs,
         }
     
